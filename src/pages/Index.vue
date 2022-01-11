@@ -22,6 +22,7 @@
 
       <div>
         <q-btn label="Submit" type="submit" color="primary"/>
+
       </div>
     </q-form>
 
@@ -43,6 +44,7 @@
 <script>
 import { defineComponent } from 'vue';
 import { ref } from 'vue'
+import { Cookies } from 'quasar'
 
 export default {
   setup () {
@@ -52,6 +54,7 @@ export default {
       Pigghet: ref(5),
       Sömntid: ref('0'),
       submitResult,
+      api_url: "https://api.simsva.se/amicadb",
 
       onSubmit (evt) {
           const formData = new FormData(evt.target)
@@ -74,9 +77,9 @@ export default {
 
           submitResult.value = data
 
-          fetch("https://api.simsva.se/amicadb/answer", {
+          fetch(`${this.api_url}/answer`, {
             method: "POST",
-            body: `sleep=${data[0]['value']}&sleep_time=${intervals[data[1]['value']]}`,
+            body: `sleep=${data[0]['value']}&sleep_time=${intervals[data[1]['value']]}&token=${Cookies.get("token")}`,
             headers: {
               "Content-Type": "application/x-www-form-urlencoded",
             },
@@ -85,7 +88,17 @@ export default {
     }
   },
   methods: {
-
+    myFunction () {
+      var value = Cookies.get('token');
+      if (value == null) {
+          fetch(`${this.api_url}/token`) 
+            .then(res => res.text())
+            .then(data => Cookies.set("token", data))
+      }
+    }
+  },
+  created() {
+    this.myFunction()
   }
 }
 </script>
@@ -106,4 +119,5 @@ body{
   color: white;
   font-weight: 500;
 }
+
 </style>
