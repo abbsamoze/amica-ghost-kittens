@@ -13,8 +13,8 @@
         />
 
         <h1 id="title">Hur många timmar har du sovit idag?</h1>
-        <q-radio dark name="Sömntid" v-model="Sömntid" val="0" label="1" id="radio" />
-        <q-radio dark name="Sömntid" v-model="Sömntid" val="1-3" label="2-3" id="radio" />
+        <q-radio dark name="Sömntid" v-model="Sömntid" val="0" label="0" id="radio" />
+        <q-radio dark name="Sömntid" v-model="Sömntid" val="1-3" label="1-3" id="radio" />
         <q-radio dark name="Sömntid" v-model="Sömntid" val="4-6" label="4-6" id="radio" />
         <q-radio dark name="Sömntid" v-model="Sömntid" val="7-9" label="7-9" id="radio" />
         <q-radio dark name="Sömntid" v-model="Sömntid" val="10+" label="10+" id="radio" />
@@ -65,8 +65,8 @@ export default {
           }
 
           let intervals = {
-            "1": 0,
-            "2-3": 1,
+            "0": 0,
+            "1-3": 1,
             "4-6": 2,
             "7-9": 3,
             "10+": 4
