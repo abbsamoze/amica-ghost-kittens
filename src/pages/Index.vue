@@ -21,12 +21,11 @@
       </div>
 
       <div>
-        <q-btn label="Submit" type="submit" color="primary"/>
-
+        <q-btn label="Submit" type="submit" color="primary" />
       </div>
     </q-form>
 
-    <q-card v-if="submitResult.length> 0" flat bordered class="q-mt-md bg-grey-2">
+    <!-- <q-card v-if="notanswered" flat bordered class="q-mt-md bg-grey-2">
       <q-card-section>Tack för ditt svar:</q-card-section>
       <q-separator />
       <q-card-section class="row q-gutter-sm items-center">
@@ -36,12 +35,13 @@
           class="q-px-sm q-py-xs bg-grey-8 text-white rounded-borders text-center text-no-wrap"
         >{{ item.name }} = {{ item.value }}</div>
       </q-card-section>
-    </q-card>
-  </div>
+    </q-card> -->
 
+  </div>
 </template>
 
 <script>
+
 import { defineComponent } from 'vue';
 import { ref } from 'vue'
 import { Cookies } from 'quasar'
@@ -54,9 +54,13 @@ export default {
       Pigghet: ref(5),
       Sömntid: ref('0'),
       submitResult,
+      answtext: 'hej',
       api_url: "https://api.simsva.se/amicadb",
+      alreadyanswered: false,
+      notanswered: false,
 
       onSubmit (evt) {
+          let temp = this;
           const formData = new FormData(evt.target)
           const data = []
 
@@ -76,13 +80,28 @@ export default {
           }
 
           submitResult.value = data
-
-          fetch(`${this.api_url}/answer`, {
+          let temptext=""
+          fetch(`https://api.simsva.se/amicadb/answer`, {
             method: "POST",
             body: `sleep=${data[0]['value']}&sleep_time=${intervals[data[1]['value']]}&token=${Cookies.get("token")}`,
             headers: {
               "Content-Type": "application/x-www-form-urlencoded",
             },
+          }).then(res => {
+            let self = this;
+            switch(res.status) {
+              case 200: // Success
+                alert('Thanks for submitting')
+                break;
+
+              case 401: // Already answered
+                alert('Already submitted today')
+                break;
+
+              case 404: // Invalid token
+                alert('Invalid token')
+                break;
+            }
           })
       }
     }
@@ -95,7 +114,7 @@ export default {
             .then(res => res.text())
             .then(data => Cookies.set("token", data))
       }
-    }
+    },
   },
   created() {
     this.myFunction()
