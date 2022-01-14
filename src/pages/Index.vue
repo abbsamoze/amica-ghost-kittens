@@ -2,6 +2,22 @@
  <div class="q-pa-md">
     <q-form @submit="onSubmit" class="q-gutter-md">
       <div class="q-mt-xl">
+        <h1 id="title">Ditt kön</h1>
+        <q-radio dark name="Gender" v-model="Gender" val="0" label="Man" id="radio" />
+        <q-radio dark name="Gender" v-model="Gender" val="1" label="Kvinna" id="radio" />
+        <q-radio dark name="Gender" v-model="Gender" val="2" label="Annat" id="radio" />
+        <q-radio dark name="Gender" v-model="Gender" val="3" label="Vill inte ange" id="radio" />
+
+        <h1 id="title">Hur gammal är du?</h1>
+        <q-slider
+          name="Age"
+          v-model="Age"
+          label-always
+          :min="10"
+          :max="50"
+          :step="1"
+        />
+
         <h1 id="title">Hur pigg känner du dig idag 1-10?</h1>
         <q-slider
           name="Pigghet"
@@ -18,6 +34,8 @@
         <q-radio dark name="Sömntid" v-model="Sömntid" val="4-6" label="4-6" id="radio" />
         <q-radio dark name="Sömntid" v-model="Sömntid" val="7-9" label="7-9" id="radio" />
         <q-radio dark name="Sömntid" v-model="Sömntid" val="10+" label="10+" id="radio" />
+
+
       </div>
 
       <div>
@@ -52,6 +70,8 @@ export default {
 
     return {
       Pigghet: ref(5),
+      Age: ref(25),
+      Gender: ref('0'),
       Sömntid: ref('0'),
       submitResult,
       answtext: 'hej',
@@ -60,7 +80,6 @@ export default {
       notanswered: false,
 
       onSubmit (evt) {
-          let temp = this;
           const formData = new FormData(evt.target)
           const data = []
 
@@ -80,10 +99,9 @@ export default {
           }
 
           submitResult.value = data
-          let temptext=""
           fetch(`https://api.simsva.se/amicadb/answer`, {
             method: "POST",
-            body: `sleep=${data[0]['value']}&sleep_time=${intervals[data[1]['value']]}&token=${Cookies.get("token")}`,
+            body: `sleep=${data[2]['value']}&sleep_time=${intervals[data[3]['value']]}&age=${data[1]['value']}&gender=${data[0]['value']}&token=${Cookies.get("token")}`,
             headers: {
               "Content-Type": "application/x-www-form-urlencoded",
             },

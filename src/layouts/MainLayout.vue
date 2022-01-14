@@ -59,7 +59,7 @@ const linksList = [
   {
     title: 'Github',
     icon: 'code',
-    link: 'https://github.com/quasarframework'
+    link: 'https://github.com/abbsamoze/amica-ghost-kittens'
   }
 ];
 
