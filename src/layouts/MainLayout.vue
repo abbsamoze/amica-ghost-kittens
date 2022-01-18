@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          Sleep Analysis
+          Sömnenkät
         </q-toolbar-title>
 
       </q-toolbar>
@@ -29,7 +29,7 @@
           header
           style="color:white;"
         >
-          Essential Links
+          Länkar
         </q-item-label>
 
         <EssentialLink
@@ -51,11 +51,6 @@
 import EssentialLink from 'components/EssentialLink.vue'
 
 const linksList = [
-  {
-    title: 'Data',
-    icon: 'school',
-    link: 'https://api.simsva.se/amicadb/answer'
-  },
   {
     title: 'Github',
     icon: 'code',
