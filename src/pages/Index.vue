@@ -18,7 +18,7 @@
           :step="1"
         />
 
-        <h1 id="title">Hur pigg känner du dig idag 1-10?</h1>
+        <h1 id="title">Hur pigg känner du dig idag 0-10?</h1>
         <q-slider
           name="Pigghet"
           v-model="Pigghet"
@@ -28,7 +28,7 @@
           :step="1"
         />
 
-        <h1 id="title">Hur många timmar har du sovit idag?</h1>
+        <h1 id="title">Hur många timmar har du sovit idag? (Runda neråt)</h1>
         <q-radio dark name="Sömntid" v-model="Sömntid" val="0" label="0" id="radio" />
         <q-radio dark name="Sömntid" v-model="Sömntid" val="1-3" label="1-3" id="radio" />
         <q-radio dark name="Sömntid" v-model="Sömntid" val="4-6" label="4-6" id="radio" />
